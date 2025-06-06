@@ -1,0 +1,2 @@
+Code für Arduino Uno mit 2 MPU6050
+https://forum.arduino.cc/t/arduino-uno-with-2-acclerometers-mpu6050/465655/7
