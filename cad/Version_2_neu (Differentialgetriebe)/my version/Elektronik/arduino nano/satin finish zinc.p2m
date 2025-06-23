@@ -1,0 +1,30 @@
+shader "top_name"  "top_mtl"  
+(
+	 "num_cols"  2 ,
+	 "illum"  "model_4.p2a" 
+)
+
+material "iii"  "swt_main_phen"  
+(
+	 "col1"  0.99 1.00 0.99 ,
+	 "col2"  0.80 0.81 0.80 ,
+	 "fast_glossy"  on ,
+	 "ambient_factor"  0 ,
+	 "diffuse_factor"  0.3 ,
+	 "specular_factor"  0 ,
+	 "specular_color"  1 1 1 ,
+	 "glossy_factor"  0.4 ,
+	 "exponent"  1.6 ,
+	 "reflectivity"  0.8 ,
+	 "anisotropic_courseness"  0.8 ,
+	 "n_samples"  8 ,
+	 "transparency"  0 ,
+	 "amplitude"  0 ,
+	 "scale"  1e-006 ,
+	 "detail"  1 ,
+	 "sharpness"  1 ,
+	 "rough_high"  1 ,
+	 "rough_low"  0 ,
+	 "sw_shader" satinfinishzinc
+)
+end material 

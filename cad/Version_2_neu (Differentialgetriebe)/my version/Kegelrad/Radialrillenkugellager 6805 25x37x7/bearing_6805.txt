@@ -1,0 +1,18 @@
+﻿"Symbol";"Value";"Unit";
+"REFERENCE";"6805";"";
+"LIMIT_SPEED";"18000";"rpm";
+"TraceParts.PartVersion";"1.1.2";"";
+"SUPPLIER";"NACHI-Fujikoshi Corp.";"";
+"WIDTH";"7";"mm";
+"MASS";"0.022";"kg";
+"TraceParts.PartNumber";"33-22032021-056875";"";
+"TraceParts.PartLanguage";"en";"";
+"DESIGN";"Deep-Groove Ball Bearing Open Type 6805";"";
+"TraceParts.InstanceId";"33-22032021-0568751L64U9ZK2U89T9I4MNQ5I4Y3Y";"";
+"TraceParts.PartTitle";"Deep-Groove Ball Bearings Open Type";"";
+"INNER_DIAMETER";"25";"mm";
+"TRACEPARTS";"TRACEPARTS";"";
+"TraceParts.PartStatusId";"";"";
+"OUTER_DIAMETER";"37";"mm";
+"TraceParts.ClassPath";"NACHI:33-22032021-056875";"";
+"TraceParts.PartStatus";"Published";"";
