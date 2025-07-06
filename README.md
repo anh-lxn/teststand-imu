@@ -26,13 +26,19 @@ All mechanical parts are **3D printed**, and motion is driven by **NEMA 17 stepp
 ### Z-Axis Rotation
 
 <p align="center">
-  <img src="./docs/rotation_z.gif" width="500">
+  <img src="./docs/rotation_z.gif" width="1920">
+</p>
+
+### X/Y-Axis Rotation
+
+<p align="center">
+  <img src="./docs/rotation_xz.gif" width="1920">
 </p>
 
 ### Exploded Assembly View
 
 <p align="center">
-  <img src="./docs/Explosionsansicht_Montageanimation.gif" width="500">
+  <img src="./docs/Explosionsansicht_Montageanimation.gif" width="1920">
 </p>
 
 ---
