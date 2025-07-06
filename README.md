@@ -1,4 +1,4 @@
-# 🧪 IMU Calibration Test Stand with Differential Gear System
+# IMU Calibration Test Stand with Differential Gear System
 
 ## Project Overview
 
