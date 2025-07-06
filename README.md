@@ -53,4 +53,6 @@ Reliable IMU data is only possible when the sensors are properly **calibrated**.
 
 ## 👨‍🔧 Author
 
-This project was developed as part of a university research initiative in **sensor technology and mechatronic systems**.
+- Anh Le Xuan – Student Assistant (SHK), responsible for mechanical design and implementation  
+- Benjamin Waschilewski – Research Associate and Supervisor  
+- Institute of Textile Machinery and High Performance Material Technology (ITM), TU Dresden
