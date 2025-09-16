@@ -38,7 +38,7 @@ All mechanical parts are **3D printed**, and motion is driven by **NEMA 17 stepp
 
 <p align="center">
   <b>Exploded Assembly View</b><br>
-  <img src="./docs/Explosionsansicht_Montageanimation.gif" width="600">
+  <img src="./docs/ExplodedView_AssemblyAnimation.gif" width="600">
 </p>
 
 ---
