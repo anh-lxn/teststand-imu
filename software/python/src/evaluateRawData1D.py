@@ -146,8 +146,8 @@ def plot_accelerometer():
     ax_plot.scatter(df_accel.index+1, ax_raw_g, s=0.3, label="ax_raw", color="orange")
     ax_plot.scatter(df_accel.index+1, ax_cal_g, s=0.3, label="ax_cal", color="green")
     ax_plot.legend()
-    ax_plot.set_title("Accelerometerwerte für X")
-    ax_plot.set_xlabel("Messungen")
+    ax_plot.set_title("Accelerometer values for X")
+    ax_plot.set_xlabel("Measurements")
     ax_plot.set_ylabel("ax")
 
     # Accelerometerwerte für Y
@@ -155,8 +155,8 @@ def plot_accelerometer():
     ay_plot.scatter(df_accel.index+1, ay_raw_g, s=0.3, label="ay_raw", color="orange")
     ay_plot.scatter(df_accel.index+1, ay_cal_g, s=0.3, label="ay_cal", color="green")
     ay_plot.legend()
-    ay_plot.set_title("Accelerometerwerte für Y")
-    ay_plot.set_xlabel("Messungen")
+    ay_plot.set_title("Accelerometer values for Y")
+    ay_plot.set_xlabel("Measurements")
     ay_plot.set_ylabel("ay")
 
     # Accelerometerwerte für Z
@@ -164,8 +164,8 @@ def plot_accelerometer():
     az_plot.scatter(df_accel.index+1, az_raw_g, s=0.3, label="az_raw", color="orange")
     az_plot.scatter(df_accel.index+1, az_cal_g, s=0.3, label="az_cal", color="green")
     az_plot.legend()
-    az_plot.set_title("Accelerometerwerte für Z")
-    az_plot.set_xlabel("Messungen")
+    az_plot.set_title("Accelerometer values for Z")
+    az_plot.set_xlabel("Measurements")
     az_plot.set_ylabel("az")
 
 
@@ -181,8 +181,8 @@ def plot_gyroskop():
     gx_plot.scatter(df_gx.index+1, gx_raw_deg, s=0.3, label="gx_raw", color="orange")
     gx_plot.scatter(df_gx.index+1, gx_cal_deg, s=0.3, label="gx_cal", color="green")
     gx_plot.legend()
-    gx_plot.set_title("Gyroskopwerte für Drehung um X-Achse")
-    gx_plot.set_xlabel("Messungen")
+    gx_plot.set_title("Gyroscope values for rotation around X-axis")
+    gx_plot.set_xlabel("Measurements")
     gx_plot.set_ylabel("gx")
 
     # Gyroskopwerte für Drehung um Y-Achse
@@ -190,8 +190,8 @@ def plot_gyroskop():
     gy_plot.scatter(df_gy.index+1, gy_raw_deg, s=0.3, label="gy_raw", color="orange")
     gy_plot.scatter(df_gy.index+1, gy_cal_deg, s=0.3, label="gy_cal", color="green")
     gy_plot.legend()
-    gy_plot.set_title("Gyroskopwerte für Drehung um Y-Achse")
-    gy_plot.set_xlabel("Messungen")
+    gy_plot.set_title("Gyroscope values for rotation around Y-axis")
+    gy_plot.set_xlabel("Measurements")
     gy_plot.set_ylabel("gy")
 
     # Gyroskopwerte für Drehung um Z-Achse
@@ -199,8 +199,8 @@ def plot_gyroskop():
     gz_plot.scatter(df_gz.index+1, gz_raw_deg, s=0.3, label="gz_raw", color="orange")
     gz_plot.scatter(df_gz.index+1, gz_cal_deg, s=0.3, label="gz_cal", color="green")
     gz_plot.legend()
-    gz_plot.set_title("Gyroskopwerte für Drehung um Z-Achse")
-    gz_plot.set_xlabel("Messungen")
+    gz_plot.set_title("Gyroscope values for rotation around Z-axis")
+    gz_plot.set_xlabel("Measurements")
     gz_plot.set_ylabel("gz")
 
     plt.tight_layout()
