@@ -55,14 +55,39 @@ The wiring diagram shows the connection between the Arduino Nano, stepper motor 
 
 ## 📊 Sensor Data Visualization
 
+To validate the calibration process, both **accelerometer** and **gyroscope** signals were recorded before and after calibration.  
+The plots show the comparison between **raw data**, **calibrated data**, and the **expected values** during controlled rotations.  
+
+### 📈 Accelerometer Calibration
 <p align="center">
-  <img src="./docs/imu_raw_data.png" width="800">
+  <img src="./docs/accelerometer_calibration_example1.png" width="1000">
 </p>
 
-The above plot shows raw IMU data (accelerometer and gyroscope signals) during controlled motion.  
-These visualizations help evaluate drift, bias, and misalignment of the sensor axes.
+The accelerometer plots illustrate the three axes (**ax, ay, az**).  
+- 🟠 *Raw data* (uncalibrated)  
+- 🟢 *Calibrated data* (after bias and scale factor correction)  
+- 🔴 *Expected values* (reference for controlled rotation)  
+
+Calibration significantly reduces **bias** and aligns the output closer to the expected reference.  
 
 ---
+
+### 📈 Gyroscope Calibration
+<p align="center">
+  <img src="./docs/gyroscope_calibration_example1.png" width="1000">
+</p>
+
+The gyroscope plots illustrate the three axes (**gx, gy, gz**).  
+- 🟠 *Raw data* (uncalibrated)  
+- 🟢 *Calibrated data* (after correction)  
+- 🔴 *Expected values* (reference for applied rotation)  
+
+Calibration minimizes **offset drift** and ensures a more accurate representation of angular velocity.  
+
+---
+
+✅ These visualizations confirm that the test stand enables **reliable calibration** by applying repeatable motion sequences and comparing sensor output to ground truth.
+
 
 ## 🧠 Motivation
 
