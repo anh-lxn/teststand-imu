@@ -1,0 +1,3 @@
+[submodule "software/python/src/imu-calib"]
+	path = software/python/src/imu-calib
+	url = https://github.com/mikoff/imu-calib
