@@ -16,7 +16,7 @@ CSV_GYRO = os.path.join(DATA_DIR, "imu_gyro_data.csv") # CSV für Gyro-Daten
 
 
 # === Einstellungen anpassen ===
-PORT = "COM4"
+PORT = "COM5"
 BAUDRATE = 115200
 
 # === Verbindung herstellen ===

@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-from enum import StrEnum
+import numpy as np
 
 # Pfade
 BASE_DIR = os.path.dirname(os.path.abspath(__file__)) # aktueller Ordner
@@ -19,7 +19,40 @@ counts_per_dps = 131.0  # laut Datenblatt
 df_accel = pd.read_csv(CSV_ACCEL)
 df_gyro = pd.read_csv(CSV_GYRO)
 
-# Dataframe Anpassungen
+### ----- Dataframe Anpassungen -----
+# Filtering Gyro Data (1-sigma)
+medians = df_gyro.groupby("id")["gyro_dps"].median()
+std = df_gyro.groupby("id")["gyro_dps"].std()
+lower = medians - 1*std
+upper = medians + 1*std
+
+df_filtered = pd.DataFrame() # leeres Dataframe mit gleichen Spalten wie df_gyro
+
+# Filter für in der Nähe des Median mit Sigma
+for i in range(len(medians)):
+    id = medians.index[i]
+
+    lo = lower[id]
+    hi = upper[id]
+    
+    subset = df_gyro[(df_gyro["id"] == id) &
+                     (df_gyro["gyro_dps"] >= lo) &
+                     (df_gyro["gyro_dps"] <= hi)]
+    df_filtered = pd.concat([df_filtered, subset])
+    df_filtered = df_filtered.reset_index(drop=True)
+
+# Mittelwerte
+mean_data = []
+count = 1
+for i in range(len(medians)):
+    id = medians.index[i]
+    block = df_filtered[df_filtered["id"].isin([id])]
+    #id, i, axis, gyro_raw, gyro_dps, w
+    mean_data.append([id, count, block["axis"].iloc[0], block["gyro_raw"].mean(), block["gyro_dps"].mean(), block["w"].mean()])
+    count += 1
+df_mean = pd.DataFrame(mean_data, columns=["id", "i", "axis", "gyro_raw", "gyro_dps", "w"])
+df_gyro = df_mean.copy()
+
 # Vorzeichen der Winkelgeschwindigkeiten korrigieren
 df_gyro.loc[df_gyro["id"].str.contains("n"), "w"] *= -1
 
@@ -28,7 +61,7 @@ df_gx = df_gyro[df_gyro["id"].isin(["gxn", "gxp"])] # Dataframe mit nur rohen Gy
 df_gy = df_gyro[df_gyro["id"].isin(["gyn", "gyp"])] # Dataframe mit nur rohen Gyrodaten vom Y
 df_gz = df_gyro[df_gyro["id"].isin(["gzn", "gzp"])] # Dataframe mit nur rohen Gyrodaten vom Z
 
-
+### ----- Sollwerte -----
 # Sollwerte Accelerometer in g für jede Phase
 ax_expected_g_dict = {"axp": +1, "axn": -1, "ayp":  0, "ayn":  0, "azp":  0, "azn":  0}
 ay_expected_g_dict = {"axp": 0, "axn": 0, "ayp":  1, "ayn":  -1, "azp":  0, "azn":  0}
@@ -38,7 +71,6 @@ az_expected_g_dict = {"axp": 0, "axn": 0, "ayp":  0, "ayn":  0, "azp":  1, "azn"
 gx_expected_deg = df_gx["w"]
 gy_expected_deg = df_gy["w"]
 gz_expected_deg = df_gz["w"]
-
 
 # Accel-Sollwerte für die Phasen
 df_accel_expected = df_accel.copy() 
@@ -173,35 +205,45 @@ def plot_accelerometer():
     plt.show()
 
 def plot_gyroskop():
-     # Plot
-    figure, (gx_plot, gy_plot, gz_plot) = plt.subplots(3, 1, figsize=(8, 10))
-
+    # Plot
+    figure, (gx_plot, gy_plot, gz_plot) = plt.subplots(3, 1, figsize=(4, 10))
+    width = 0.25 # Balkendicke
+    
     # Gyroskopwerte für Drehung um X-Achse
-    gx_plot.scatter(df_gx.index+1, gx_expected_deg, s=0.3, label="gx_expected", color="red")
-    gx_plot.scatter(df_gx.index+1, gx_raw_deg, s=0.3, label="gx_raw", color="orange")
-    gx_plot.scatter(df_gx.index+1, gx_cal_deg, s=0.3, label="gx_cal", color="green")
-    gx_plot.legend()
+    labels_x = ["gxn", "gxp"]
+    x = np.arange(len(labels_x))
+    gx_plot.bar(x, gx_expected_deg.tolist(), width, label="gx_expected", color="red")
+    gx_plot.bar(x - width,         gx_raw_deg.tolist(),     width, label="gx_raw",     color="orange")
+    gx_plot.bar(x + width,  gx_cal_deg.tolist(),     width, label="gx_cal",     color="green")
+    gx_plot.set_xticks(x)
+    gx_plot.set_xticklabels(labels_x)
     gx_plot.set_title("Gyroscope values for rotation around X-axis")
-    gx_plot.set_xlabel("Measurements")
     gx_plot.set_ylabel("gx")
+    gx_plot.legend()
 
     # Gyroskopwerte für Drehung um Y-Achse
-    gy_plot.scatter(df_gy.index+1, gy_expected_deg, s=0.3, label="gy_expected", color="red")
-    gy_plot.scatter(df_gy.index+1, gy_raw_deg, s=0.3, label="gy_raw", color="orange")
-    gy_plot.scatter(df_gy.index+1, gy_cal_deg, s=0.3, label="gy_cal", color="green")
-    gy_plot.legend()
+    labels_y = ["gyn", "gyp"]
+    y = np.arange(len(labels_y))
+    gy_plot.bar(y, gy_expected_deg.tolist(), width, label="gy_expected", color="red")
+    gy_plot.bar(y - width,          gy_raw_deg.tolist(),     width, label="gy_raw",     color="orange")
+    gy_plot.bar(y + width,  gy_cal_deg.tolist(),     width, label="gy_cal",     color="green")
+    gy_plot.set_xticks(y)
+    gy_plot.set_xticklabels(labels_y)
     gy_plot.set_title("Gyroscope values for rotation around Y-axis")
-    gy_plot.set_xlabel("Measurements")
     gy_plot.set_ylabel("gy")
+    gy_plot.legend()
 
     # Gyroskopwerte für Drehung um Z-Achse
-    gz_plot.scatter(df_gz.index+1, gz_expected_deg, s=0.3, label="gz_expected", color="red")
-    gz_plot.scatter(df_gz.index+1, gz_raw_deg, s=0.3, label="gz_raw", color="orange")
-    gz_plot.scatter(df_gz.index+1, gz_cal_deg, s=0.3, label="gz_cal", color="green")
-    gz_plot.legend()
+    labels_z = ["gzn", "gzp"]
+    z = np.arange(len(labels_z))
+    gz_plot.bar(z, gz_expected_deg.tolist(), width, label="gz_expected", color="red")
+    gz_plot.bar(z - width,          gz_raw_deg.tolist(),     width, label="gz_raw",     color="orange")
+    gz_plot.bar(z + width,  gz_cal_deg.tolist(),     width, label="gz_cal",     color="green")
+    gz_plot.set_xticks(z)
+    gz_plot.set_xticklabels(labels_z)
     gz_plot.set_title("Gyroscope values for rotation around Z-axis")
-    gz_plot.set_xlabel("Measurements")
     gz_plot.set_ylabel("gz")
+    gz_plot.legend()
 
     plt.tight_layout()
     plt.show()
@@ -216,6 +258,7 @@ def print_results():
     print(f"Scale Accelerometer (g/Count): ax: {scale_g_ax}, ay: {scale_g_ay}, az: {scale_g_az}")
     print(f"Scale Gyroskop (°/s/Count): gx: {scale_deg_gx}, gy: {scale_deg_gy}, gz: {scale_deg_gz}")
 
-#print_results()
+
+print_results()
 plot_accelerometer()
 plot_gyroskop()

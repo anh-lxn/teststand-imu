@@ -67,7 +67,7 @@ uint8_t readReg(uint8_t reg){
   Wire.beginTransmission(MPU); // Verbindung zum Sensor starten
   Wire.write(reg);             // sagen: "ich möchte dieses Register lesen"
   Wire.endTransmission(false); // Verbindung offen lassen, nur Adresse geschickt
-  Wire.requestFrom((uint8_t)MPU,(uint8_t)1,(uint8_t)true); // jetzt 1 Byte anfordern
+  Wire.requestFrom(MPU, 1, true); // jetzt 1 Byte anfordern
   return Wire.read();          // empfangenes Byte zurückgeben
 }
 
@@ -78,7 +78,7 @@ uint16_t read16(uint8_t regHi){
   Wire.beginTransmission(MPU); // Verbindung starten
   Wire.write(regHi);           // Adresse des HIGH-Bytes angeben
   Wire.endTransmission(false); // nur Adresse geschickt, Verbindung offen lassen
-  Wire.requestFrom((uint8_t)MPU,(uint8_t)2,(uint8_t)true); // jetzt 2 Bytes anfordern
+  Wire.requestFrom(MPU, 2, true); // jetzt 2 Bytes anfordern
   uint8_t hi=Wire.read();      // erstes Byte = HIGH
   uint8_t lo=Wire.read();      // zweites Byte = LOW
   // HIGH und LOW zu einem 16-Bit-Wert zusammenfügen:
@@ -136,7 +136,7 @@ int16_t  mpu_fifo_pop2(){
   Wire.write(0x74);          // Adresse des Registers FIFO_R_W (0x74): nächster Wert im Eimer
   Wire.endTransmission(false);
 
-  Wire.requestFrom((uint8_t)MPU,(uint8_t)2,(uint8_t)true); // Fordere 2 Bytes vom Sensor an
+  Wire.requestFrom(MPU, 2, true); // Fordere 2 Bytes vom Sensor an
   // Zusammenbauen: erstes Byte = HIGH, zweites = LOW -> ein 16-Bit Wert
   return (int16_t)((Wire.read()<<8)|Wire.read());
 }
@@ -157,8 +157,8 @@ Phase phase = IDLE; // Enumeration phase
 
 // Sonstige Variablen
 bool motor_enabled = false;
-int transitionSpeed = 5000;
-float winkelgeschwindigkeit_imu = 40.0; // ab 15.0 ist konstant
+int transitionSpeed = 5000; // Standard: 5000
+float winkelgeschwindigkeit_imu = 30.0; // ab 15.0 ist konstant, Standard: 40.0
 float beschleunigung = 20000.0;
 bool accel_calibration_done = false;
 bool gyro_calibration_done = false;
@@ -218,7 +218,7 @@ void readAccelRaw(const char* id) {
     Wire.endTransmission(false);   // repeated start
 
     // 2) 14 Bytes vom Sensor anfordern: Accel(6) + Temp(2) + Gyro(6)
-    Wire.requestFrom((uint8_t)MPU, (uint8_t)12, (uint8_t)true);
+    Wire.requestFrom(MPU, 14, true);
 
     // 3) Bytes zusammensetzen
     ax  = (Wire.read() << 8) | Wire.read();
@@ -277,7 +277,7 @@ void warmupMPU() {
     Wire.beginTransmission(MPU);
     Wire.write(0x3B);
     Wire.endTransmission(false);
-    Wire.requestFrom((uint8_t)MPU, (uint8_t)14, (uint8_t)true);
+    Wire.requestFrom(MPU, 14, true);
     while (Wire.available()) Wire.read(); // alles verwerfen
     delay(10);
   }
@@ -427,7 +427,7 @@ void starte_imu_setup(){
   // IO
   Serial.begin(115200);
   Wire.begin();
-  Wire.setClock(400000); // I2C Fast Mode
+  Wire.setClock(100000); // I2C Fast Mode
   delay(100);
   
   // MPU konfigurieren (DLPF 20 Hz, Fs=100 Hz)
@@ -617,7 +617,6 @@ void run_calibration_gyro() {
 
     case DONE:
       Serial.println("GYRO CALIBRATION DONE");
-      Serial.println("");
       gyro_calibration_done = true;
       break;
   }
@@ -642,8 +641,8 @@ void loop()
           }
         else {return;} // durchlaufe Schleife solange, bis Treiber aktiviert sind
       }
-    
-    
+
+
     // --- Accelerometer-Kalibrierung ---
     if (!accel_calibration_done){
       run_calibration_accel();
@@ -665,6 +664,9 @@ void loop()
     }
     
 
-    if (accel_calibration_done && accel_calibration_done) {Serial.println("CALIBRATION DONE");}
+    if (accel_calibration_done && accel_calibration_done) {
+      Serial.println("CALIBRATION DONE");
+      while (true) {}
+      }
     
   }

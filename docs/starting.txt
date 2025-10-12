@@ -1,0 +1,8 @@
+cd C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\software\python
+venv/scripts/activate  
+
+######
+
+python C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\software\python\src\imu-calib\calibrate_real_imu.py --sampling_frequency=100 --file=C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\software\python\src\imu-calib\data\imu0.log
+python C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\software\python\src\imu-calib\calibrate_real_imu.py --sampling_frequency=100 --file=C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\data\data.csv
+python C:\Users\anhle\iCloudDrive\Studium\SHK\teststand-imu\software\python\src\getDataPySerial_2.py
